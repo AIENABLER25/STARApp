@@ -21,16 +21,79 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class JobClassification:
-    """Data class for job classification information"""
-    job_title: str
-    class_code: str
-    soc_code: str
-    soc_title: str
-    salary_range: str
-    department: str
-    category: str
-    description: str
-    source_url: str
+    """Data class for job classification information - matches standardized intake format"""
+    JobCode: str
+    JobTitleAbbreviation: str
+    JobTitleFull: str
+    OccupationalGroupText: str
+    EEOText: str
+    WorkFunction: str
+    WorkLevel: str
+    SupervisionReceived: str
+
+
+# EEO (Equal Employment Opportunity) Category Mappings based on SOC codes
+EEO_CATEGORIES = {
+    "11": "Officials and Administrators",
+    "13": "Professionals",
+    "15": "Technicians",
+    "17": "Professionals",
+    "19": "Professionals",
+    "21": "Professionals",
+    "23": "Professionals",
+    "25": "Professionals",
+    "27": "Professionals",
+    "29": "Professionals",
+    "31": "Paraprofessionals",
+    "33": "Protective Service Workers",
+    "35": "Service-Maintenance",
+    "37": "Service-Maintenance",
+    "39": "Service-Maintenance",
+    "41": "Administrative Support",
+    "43": "Administrative Support",
+    "45": "Skilled Craft Workers",
+    "47": "Skilled Craft Workers",
+    "49": "Skilled Craft Workers",
+    "51": "Skilled Craft Workers",
+    "53": "Service-Maintenance",
+}
+
+# Work Level Mappings
+WORK_LEVELS = {
+    "I": "Entry Level",
+    "II": "Journey Level",
+    "III": "Senior Level",
+    "IV": "Advanced Level",
+    "Director": "Executive",
+    "Manager": "Management",
+    "Supervisor": "Supervisory",
+    "Chief": "Executive",
+    "Administrator": "Management",
+    "Coordinator": "Professional",
+    "Specialist": "Professional",
+    "Analyst": "Professional",
+    "Technician": "Technical",
+    "Assistant": "Support",
+    "Aide": "Entry Level",
+    "Clerk": "Support",
+}
+
+# Supervision Received Mappings
+SUPERVISION_LEVELS = {
+    "Director": "Minimal - Reports to Executive Leadership",
+    "Manager": "General - Reports to Director/Executive",
+    "Supervisor": "General - Reports to Manager",
+    "Chief": "Minimal - Reports to Executive Leadership",
+    "III": "Limited - Works independently with periodic review",
+    "II": "Moderate - Regular supervision with some independence",
+    "I": "Close - Direct supervision, work reviewed frequently",
+    "Specialist": "Limited - Works independently with periodic review",
+    "Analyst": "Limited - Works independently with periodic review",
+    "Technician": "Moderate - Regular supervision with some independence",
+    "Assistant": "Close - Direct supervision, work reviewed frequently",
+    "Aide": "Close - Direct supervision, work reviewed frequently",
+    "Clerk": "Close - Direct supervision, work reviewed frequently",
+}
 
 
 class SOCCodeMapper:
@@ -624,6 +687,113 @@ class JobClassificationScraper:
         self.soc_mapper = SOCCodeMapper()
         self.classifications = []
 
+    def _generate_abbreviation(self, job_title: str) -> str:
+        """Generate job title abbreviation from full title"""
+        # Common abbreviation rules
+        abbreviations = {
+            "Administrative": "Admin",
+            "Administrator": "Admin",
+            "Assistant": "Asst",
+            "Associate": "Assoc",
+            "Coordinator": "Coord",
+            "Department": "Dept",
+            "Development": "Dev",
+            "Director": "Dir",
+            "Engineer": "Engr",
+            "Environmental": "Environ",
+            "Information": "Info",
+            "Inspector": "Insp",
+            "Laboratory": "Lab",
+            "Lieutenant": "Lt",
+            "Maintenance": "Maint",
+            "Management": "Mgmt",
+            "Manager": "Mgr",
+            "Mechanical": "Mech",
+            "Officer": "Ofcr",
+            "Operations": "Ops",
+            "Professional": "Prof",
+            "Programmer": "Prgmr",
+            "Representative": "Rep",
+            "Secretary": "Secy",
+            "Sergeant": "Sgt",
+            "Services": "Svcs",
+            "Specialist": "Spec",
+            "Supervisor": "Supv",
+            "Technical": "Tech",
+            "Technician": "Tech",
+            "Technology": "Tech",
+            "Transportation": "Trans",
+        }
+
+        abbrev = job_title
+        for full, short in abbreviations.items():
+            abbrev = abbrev.replace(full, short)
+
+        # Truncate if still too long
+        if len(abbrev) > 25:
+            words = abbrev.split()
+            abbrev = " ".join(w[:4] if len(w) > 4 else w for w in words)
+
+        return abbrev[:25]
+
+    def _get_eeo_category(self, soc_code: str) -> str:
+        """Get EEO category based on SOC code prefix"""
+        if soc_code and len(soc_code) >= 2:
+            prefix = soc_code[:2]
+            return EEO_CATEGORIES.get(prefix, "Unclassified")
+        return "Unclassified"
+
+    def _get_work_level(self, job_title: str) -> str:
+        """Determine work level from job title"""
+        for keyword, level in WORK_LEVELS.items():
+            if keyword in job_title:
+                return level
+        return "Professional"
+
+    def _get_supervision_received(self, job_title: str) -> str:
+        """Determine supervision level from job title"""
+        for keyword, supervision in SUPERVISION_LEVELS.items():
+            if keyword in job_title:
+                return supervision
+        return "Moderate - Regular supervision with some independence"
+
+    def _get_work_function(self, soc_code: str, soc_title: str) -> str:
+        """Generate work function description from SOC info"""
+        if not soc_title:
+            return ""
+
+        # Map SOC major groups to work functions
+        work_functions = {
+            "11": "Management and oversight of organizational operations, staff, and resources",
+            "13": "Business operations analysis, financial management, and administrative functions",
+            "15": "Computer systems design, programming, data analysis, and technical support",
+            "17": "Engineering design, analysis, technical planning, and project oversight",
+            "19": "Scientific research, analysis, environmental monitoring, and technical studies",
+            "21": "Community services, counseling, case management, and social support",
+            "23": "Legal analysis, representation, court administration, and compliance",
+            "25": "Education, instruction, library services, and training delivery",
+            "27": "Communications, media production, design, and public relations",
+            "29": "Healthcare delivery, patient care, medical diagnostics, and treatment",
+            "31": "Healthcare support, patient assistance, and clinical support services",
+            "33": "Public safety, law enforcement, emergency response, and protective services",
+            "35": "Food preparation, service, and hospitality operations",
+            "37": "Building maintenance, grounds keeping, and facility operations",
+            "39": "Personal care, recreation services, and customer assistance",
+            "41": "Sales, customer service, and retail operations",
+            "43": "Administrative support, records management, and office operations",
+            "45": "Agricultural operations, farming, and natural resource management",
+            "47": "Construction, building trades, and infrastructure maintenance",
+            "49": "Equipment maintenance, repair, and installation services",
+            "51": "Production operations, manufacturing, and quality control",
+            "53": "Transportation, material handling, and logistics operations",
+        }
+
+        if soc_code and len(soc_code) >= 2:
+            prefix = soc_code[:2]
+            return work_functions.get(prefix, f"Performs duties related to {soc_title}")
+
+        return f"Performs duties related to {soc_title}"
+
     def scrape_governmentjobs(self, state: str = "wv", max_pages: int = 50) -> List[JobClassification]:
         """
         Scrape job classifications from governmentjobs.com
@@ -743,7 +913,9 @@ class JobClassificationScraper:
         """
         Load sample West Virginia job classification data
         Based on typical state government job classifications
+        Output format matches standardized intake spreadsheet
         """
+        # Raw data: (job_title, class_code, soc_code, soc_title)
         sample_data = [
             # Administrative and Management
             ("Administrative Secretary", "0101", "43-6014", "Secretaries and Administrative Assistants"),
@@ -1010,16 +1182,16 @@ class JobClassificationScraper:
 
         classifications = []
         for title, code, soc_code, soc_title in sample_data:
+            # Build classification in standardized format
             classifications.append(JobClassification(
-                job_title=title,
-                class_code=code,
-                soc_code=soc_code,
-                soc_title=soc_title,
-                salary_range="",
-                department="State of West Virginia",
-                category="",
-                description="",
-                source_url="https://www.governmentjobs.com/careers/wv/classspecs"
+                JobCode=code,
+                JobTitleAbbreviation=self._generate_abbreviation(title),
+                JobTitleFull=title,
+                OccupationalGroupText=soc_title,
+                EEOText=self._get_eeo_category(soc_code),
+                WorkFunction=self._get_work_function(soc_code, soc_title),
+                WorkLevel=self._get_work_level(title),
+                SupervisionReceived=self._get_supervision_received(title),
             ))
 
         self.classifications = classifications
@@ -1061,14 +1233,15 @@ class JobClassificationScraper:
         if not self.classifications:
             return {"error": "No classifications loaded"}
 
-        soc_codes = [c.soc_code for c in self.classifications if c.soc_code]
-        unique_soc = set(soc_codes)
+        occ_groups = [c.OccupationalGroupText for c in self.classifications if c.OccupationalGroupText]
+        unique_occ = set(occ_groups)
+        eeo_categories = set(c.EEOText for c in self.classifications if c.EEOText)
 
         return {
             "total_classifications": len(self.classifications),
-            "with_soc_codes": len(soc_codes),
-            "unique_soc_codes": len(unique_soc),
-            "soc_coverage": f"{len(soc_codes)/len(self.classifications)*100:.1f}%",
+            "unique_occupational_groups": len(unique_occ),
+            "eeo_categories": len(eeo_categories),
+            "coverage": f"{len(occ_groups)/len(self.classifications)*100:.1f}%",
         }
 
 
@@ -1114,17 +1287,24 @@ def main():
     summary = scraper.get_summary()
     print(f"\n📊 SUMMARY:")
     print(f"   Total Classifications: {summary['total_classifications']}")
-    print(f"   With SOC Codes: {summary['with_soc_codes']}")
-    print(f"   Unique SOC Codes: {summary['unique_soc_codes']}")
-    print(f"   SOC Coverage: {summary['soc_coverage']}")
+    print(f"   Unique Occupational Groups: {summary['unique_occupational_groups']}")
+    print(f"   EEO Categories: {summary['eeo_categories']}")
+    print(f"   Coverage: {summary['coverage']}")
 
-    # Print sample
+    # Print sample in standardized format
     print(f"\n📋 SAMPLE OUTPUT (first 10 records):")
-    print("-" * 80)
-    print(f"{'Job Title':<35} {'Class Code':<12} {'SOC Code':<12} {'SOC Title':<30}")
-    print("-" * 80)
+    print("-" * 120)
+    print(f"{'JobCode':<8} {'JobTitleAbbrev':<20} {'JobTitleFull':<30} {'OccupationalGroupText':<35} {'EEOText':<25}")
+    print("-" * 120)
     for c in classifications[:10]:
-        print(f"{c.job_title[:34]:<35} {c.class_code:<12} {c.soc_code:<12} {c.soc_title[:29]:<30}")
+        print(f"{c.JobCode:<8} {c.JobTitleAbbreviation[:19]:<20} {c.JobTitleFull[:29]:<30} {c.OccupationalGroupText[:34]:<35} {c.EEOText[:24]:<25}")
+
+    print("\n📋 WORK DETAILS (first 5 records):")
+    print("-" * 120)
+    print(f"{'JobCode':<8} {'WorkLevel':<15} {'SupervisionReceived':<50} {'WorkFunction':<45}")
+    print("-" * 120)
+    for c in classifications[:5]:
+        print(f"{c.JobCode:<8} {c.WorkLevel[:14]:<15} {c.SupervisionReceived[:49]:<50} {c.WorkFunction[:44]:<45}")
 
     print("\n" + "=" * 60)
 
