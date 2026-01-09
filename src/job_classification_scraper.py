@@ -25,6 +25,7 @@ class JobClassification:
     JobCode: str
     JobTitleAbbreviation: str
     JobTitleFull: str
+    SOCCode: str
     OccupationalGroupText: str
     EEOText: str
     WorkFunction: str
@@ -1187,6 +1188,7 @@ class JobClassificationScraper:
                 JobCode=code,
                 JobTitleAbbreviation=self._generate_abbreviation(title),
                 JobTitleFull=title,
+                SOCCode=soc_code,
                 OccupationalGroupText=soc_title,
                 EEOText=self._get_eeo_category(soc_code),
                 WorkFunction=self._get_work_function(soc_code, soc_title),
