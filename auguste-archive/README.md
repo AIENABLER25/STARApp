@@ -70,6 +70,42 @@ npm run build
 npm run preview
 ```
 
+## Deployment to Production
+
+### Quick Deploy
+
+Use the deployment script:
+
+```bash
+./deploy.sh
+```
+
+Or deploy manually:
+
+**Option 1: Vercel (Recommended)**
+```bash
+npm install -g vercel
+vercel --prod
+```
+
+**Option 2: Netlify**
+```bash
+npm install -g netlify-cli
+netlify deploy --prod
+```
+
+**Option 3: GitHub Pages**
+See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed instructions.
+
+### Deployment Files
+
+- `vercel.json` - Vercel configuration
+- `netlify.toml` - Netlify configuration
+- `DEPLOYMENT.md` - Comprehensive deployment guide
+- `deploy.sh` - Automated deployment script
+
+For detailed deployment instructions including custom domains, environment variables, and troubleshooting, see [DEPLOYMENT.md](./DEPLOYMENT.md).
+
 ## Data Structure
 
 The archive includes:
