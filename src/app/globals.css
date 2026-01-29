@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+}
+
+.gradient-header {
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #1d4ed8 100%);
+}
+
+.stat-card {
+  @apply bg-white rounded-xl p-6 border border-gray-200 transition-all duration-200;
+}
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+}
+
+.section-card {
+  @apply bg-white rounded-xl p-8 border border-gray-200 shadow-sm;
+}
+
+.nav-link {
+  @apply px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200;
+}
+.nav-link:hover {
+  @apply bg-white/10;
+}
+.nav-link.active {
+  @apply bg-white/20 text-white;
+}
