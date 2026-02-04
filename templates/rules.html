@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+
+{% block title %}Formatting Rules - Document Link Manager{% endblock %}
+
+{% block content %}
+<div class="rules-page">
+    <div class="page-header">
+        <h1>Formatting Rules</h1>
+        <p>These rules automatically apply colors, tags, and organize your entries</p>
+    </div>
+
+    <div class="rules-section">
+        <h2>Color Rules</h2>
+        <p class="section-description">Colors are applied based on priority and status</p>
+
+        <div class="color-grid">
+            <div class="color-item">
+                <div class="color-swatch" style="background: #FF6B6B"></div>
+                <span>High Priority (3)</span>
+            </div>
+            <div class="color-item">
+                <div class="color-swatch" style="background: #FF0000"></div>
+                <span>Urgent (4)</span>
+            </div>
+            <div class="color-item">
+                <div class="color-swatch" style="background: #8B0000"></div>
+                <span>Critical (5)</span>
+            </div>
+            <div class="color-item">
+                <div class="color-swatch" style="background: #4ECDC4"></div>
+                <span>New</span>
+            </div>
+            <div class="color-item">
+                <div class="color-swatch" style="background: #45B7D1"></div>
+                <span>In Progress</span>
+            </div>
+            <div class="color-item">
+                <div class="color-swatch" style="background: #96CEB4"></div>
+                <span>Completed</span>
+            </div>
+            <div class="color-item">
+                <div class="color-swatch" style="background: #95A5A6"></div>
+                <span>Archived</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="rules-section">
+        <h2>Auto-Tagging Rules</h2>
+        <p class="section-description">Tags are automatically added based on URL domain</p>
+
+        <table class="rules-table">
+            <thead>
+                <tr>
+                    <th>Domain</th>
+                    <th>Auto Tag</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>linkedin.com</td>
+                    <td><span class="tag">#linkedin</span></td>
+                </tr>
+                <tr>
+                    <td>twitter.com / x.com</td>
+                    <td><span class="tag">#twitter</span></td>
+                </tr>
+                <tr>
+                    <td>youtube.com</td>
+                    <td><span class="tag">#video</span></td>
+                </tr>
+                <tr>
+                    <td>medium.com</td>
+                    <td><span class="tag">#article</span></td>
+                </tr>
+                <tr>
+                    <td>substack.com</td>
+                    <td><span class="tag">#newsletter</span></td>
+                </tr>
+                <tr>
+                    <td>github.com</td>
+                    <td><span class="tag">#code</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="rules-section">
+        <h2>Section Rules</h2>
+        <p class="section-description">Entries are automatically moved to sections based on these rules</p>
+
+        <table class="rules-table">
+            <thead>
+                <tr>
+                    <th>Condition</th>
+                    <th>Target Section</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Priority 3, 4, or 5</td>
+                    <td>Priority</td>
+                </tr>
+                <tr>
+                    <td>Category: Action Item</td>
+                    <td>Action Items</td>
+                </tr>
+                <tr>
+                    <td>Category: Reading</td>
+                    <td>Reading List</td>
+                </tr>
+                <tr>
+                    <td>Category: Follow Up</td>
+                    <td>Follow Up</td>
+                </tr>
+                <tr>
+                    <td>Category: Reference</td>
+                    <td>References</td>
+                </tr>
+                <tr>
+                    <td>Status: Archived</td>
+                    <td>Archive</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="rules-section">
+        <h2>Active Formatting Rules</h2>
+
+        <div class="rules-list">
+            {% for rule in rules.formatting_rules %}
+            <div class="rule-card {% if not rule.enabled %}disabled{% endif %}">
+                <div class="rule-header">
+                    <h3>{{ rule.name }}</h3>
+                    <span class="rule-status">{{ 'Enabled' if rule.enabled else 'Disabled' }}</span>
+                </div>
+                <p class="rule-description">{{ rule.description }}</p>
+                <div class="rule-details">
+                    <span class="rule-action">Action: {{ rule.action }}</span>
+                    <span class="rule-priority">Priority: {{ rule.priority }}</span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="rules-info">
+        <h3>Customizing Rules</h3>
+        <p>Rules can be customized by editing the configuration file:</p>
+        <code>config/default_rules.json</code>
+        <p>After editing, click "Apply Formatting" on the dashboard to apply changes.</p>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block title %}Add Link - Document Link Manager{% endblock %}
+
+{% block content %}
+<div class="form-page">
+    <div class="form-header">
+        <h1>Add New Link</h1>
+        <p>Capture a new link to add to your weekly document</p>
+    </div>
+
+    <form action="{{ url_for('add_link') }}" method="post" class="link-form">
+        <div class="form-group">
+            <label for="url">URL <span class="required">*</span></label>
+            <input type="url" id="url" name="url" required
+                   placeholder="https://www.linkedin.com/posts/..."
+                   class="form-input">
+            <small class="form-help">Tracking parameters will be automatically removed</small>
+        </div>
+
+        <div class="form-group">
+            <label for="title">Title <span class="required">*</span></label>
+            <input type="text" id="title" name="title" required
+                   placeholder="Article or post title"
+                   class="form-input">
+        </div>
+
+        <div class="form-group">
+            <label for="summary">Summary</label>
+            <textarea id="summary" name="summary" rows="3"
+                      placeholder="Brief summary or key takeaways..."
+                      class="form-input"></textarea>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="section">Section</label>
+                <select id="section" name="section" class="form-input">
+                    <option value="this_week">This Week</option>
+                    <option value="priority">Priority</option>
+                    <option value="reading_list">Reading List</option>
+                    <option value="action_items">Action Items</option>
+                    <option value="follow_up">Follow Up</option>
+                    <option value="references">References</option>
+                    <option value="ideas">Ideas</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="category">Category</label>
+                <select id="category" name="category" class="form-input">
+                    <option value="reading">Reading</option>
+                    <option value="action_item">Action Item</option>
+                    <option value="reference">Reference</option>
+                    <option value="meeting">Meeting</option>
+                    <option value="research">Research</option>
+                    <option value="follow_up">Follow Up</option>
+                    <option value="idea">Idea</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="priority">Priority</label>
+                <select id="priority" name="priority" class="form-input">
+                    <option value="0">Normal</option>
+                    <option value="1">Low (!)</option>
+                    <option value="2">Medium (!!)</option>
+                    <option value="3">High (!!!)</option>
+                    <option value="4">Urgent (!!!!)</option>
+                    <option value="5">Critical (!!!!!)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="source">Source</label>
+                <input type="text" id="source" name="source"
+                       placeholder="email, meeting, web..."
+                       class="form-input">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="tags">Tags</label>
+            <input type="text" id="tags" name="tags"
+                   placeholder="ai, productivity, strategy (comma-separated)"
+                   class="form-input">
+            <small class="form-help">Platform tags (linkedin, twitter, etc.) are added automatically</small>
+        </div>
+
+        <div class="form-actions">
+            <a href="{{ url_for('index') }}" class="btn btn-outline">Cancel</a>
+            <button type="submit" class="btn btn-primary">Add Link</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

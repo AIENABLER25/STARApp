@@ -1,0 +1,73 @@
+{
+  "title": "CEO Weekly Document - Opportunity at Work",
+  "metadata": {
+    "created": "2026-02-04T09:00:00",
+    "modified": "2026-02-04T09:00:00",
+    "version": "1.0"
+  },
+  "sections": {
+    "priority": {
+      "name": "Priority",
+      "entries": [
+        {
+          "title": "Customize Cowork with Plugins - Claude",
+          "url": "https://www.linkedin.com/posts/aiden-blake-98169340_customize-cowork-with-plugins-claude-activity-7423107434166022144-c9f0",
+          "summary": "LinkedIn post about customizing Cowork with Claude plugins. Key insights on AI-powered workflow automation and collaboration tools.",
+          "category": "reading",
+          "status": "new",
+          "tags": ["linkedin", "ai", "productivity", "claude"],
+          "notes": "From inbox - review for potential implementation",
+          "source": "email",
+          "date_added": "2026-02-04T09:00:00",
+          "date_modified": "2026-02-04T09:00:00",
+          "priority": 3,
+          "color": "#FF6B6B"
+        }
+      ],
+      "color": "#FF6B6B",
+      "sort_order": 0
+    },
+    "this_week": {
+      "name": "This Week",
+      "entries": [],
+      "color": "#4ECDC4",
+      "sort_order": 1
+    },
+    "reading_list": {
+      "name": "Reading List",
+      "entries": [],
+      "color": "#45B7D1",
+      "sort_order": 2
+    },
+    "action_items": {
+      "name": "Action Items",
+      "entries": [],
+      "color": "#96CEB4",
+      "sort_order": 3
+    },
+    "references": {
+      "name": "References",
+      "entries": [],
+      "color": "#DDA0DD",
+      "sort_order": 4
+    },
+    "follow_up": {
+      "name": "Follow Up",
+      "entries": [],
+      "color": "#F7DC6F",
+      "sort_order": 5
+    },
+    "ideas": {
+      "name": "Ideas",
+      "entries": [],
+      "color": "#BB8FCE",
+      "sort_order": 6
+    },
+    "archive": {
+      "name": "Archive",
+      "entries": [],
+      "color": "#95A5A6",
+      "sort_order": 7
+    }
+  }
+}

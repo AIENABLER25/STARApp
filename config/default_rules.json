@@ -1,0 +1,236 @@
+{
+  "formatting_rules": [
+    {
+      "name": "high_priority_color",
+      "description": "Color high priority items red",
+      "conditions": [
+        {"field": "priority", "match_type": "equals", "value": "3"}
+      ],
+      "action": "color",
+      "action_value": "#FF6B6B",
+      "priority": 100,
+      "enabled": true
+    },
+    {
+      "name": "urgent_priority_color",
+      "description": "Color urgent items bright red",
+      "conditions": [
+        {"field": "priority", "match_type": "equals", "value": "4"}
+      ],
+      "action": "color",
+      "action_value": "#FF0000",
+      "priority": 100,
+      "enabled": true
+    },
+    {
+      "name": "critical_priority_color",
+      "description": "Color critical items dark red",
+      "conditions": [
+        {"field": "priority", "match_type": "equals", "value": "5"}
+      ],
+      "action": "color",
+      "action_value": "#8B0000",
+      "priority": 100,
+      "enabled": true
+    },
+    {
+      "name": "completed_color",
+      "description": "Color completed items green",
+      "conditions": [
+        {"field": "status", "match_type": "equals", "value": "completed"}
+      ],
+      "action": "color",
+      "action_value": "#96CEB4",
+      "priority": 50,
+      "enabled": true
+    },
+    {
+      "name": "in_progress_color",
+      "description": "Color in-progress items blue",
+      "conditions": [
+        {"field": "status", "match_type": "equals", "value": "in_progress"}
+      ],
+      "action": "color",
+      "action_value": "#45B7D1",
+      "priority": 50,
+      "enabled": true
+    },
+    {
+      "name": "archived_color",
+      "description": "Gray out archived items",
+      "conditions": [
+        {"field": "status", "match_type": "equals", "value": "archived"}
+      ],
+      "action": "color",
+      "action_value": "#95A5A6",
+      "priority": 50,
+      "enabled": true
+    },
+    {
+      "name": "linkedin_tag",
+      "description": "Auto-tag LinkedIn content",
+      "conditions": [
+        {"field": "url", "match_type": "domain", "value": "linkedin.com"}
+      ],
+      "action": "add_tag",
+      "action_value": "linkedin",
+      "priority": 10,
+      "enabled": true
+    },
+    {
+      "name": "twitter_tag",
+      "description": "Auto-tag Twitter/X content",
+      "conditions": [
+        {"field": "url", "match_type": "domain", "value": "twitter.com"}
+      ],
+      "action": "add_tag",
+      "action_value": "twitter",
+      "priority": 10,
+      "enabled": true
+    },
+    {
+      "name": "x_tag",
+      "description": "Auto-tag X content",
+      "conditions": [
+        {"field": "url", "match_type": "domain", "value": "x.com"}
+      ],
+      "action": "add_tag",
+      "action_value": "twitter",
+      "priority": 10,
+      "enabled": true
+    },
+    {
+      "name": "youtube_tag",
+      "description": "Auto-tag YouTube content",
+      "conditions": [
+        {"field": "url", "match_type": "domain", "value": "youtube.com"}
+      ],
+      "action": "add_tag",
+      "action_value": "video",
+      "priority": 10,
+      "enabled": true
+    },
+    {
+      "name": "medium_tag",
+      "description": "Auto-tag Medium articles",
+      "conditions": [
+        {"field": "url", "match_type": "domain", "value": "medium.com"}
+      ],
+      "action": "add_tag",
+      "action_value": "article",
+      "priority": 10,
+      "enabled": true
+    },
+    {
+      "name": "substack_tag",
+      "description": "Auto-tag Substack newsletters",
+      "conditions": [
+        {"field": "url", "match_type": "domain", "value": "substack.com"}
+      ],
+      "action": "add_tag",
+      "action_value": "newsletter",
+      "priority": 10,
+      "enabled": true
+    },
+    {
+      "name": "github_tag",
+      "description": "Auto-tag GitHub content",
+      "conditions": [
+        {"field": "url", "match_type": "domain", "value": "github.com"}
+      ],
+      "action": "add_tag",
+      "action_value": "code",
+      "priority": 10,
+      "enabled": true
+    }
+  ],
+  "section_rules": [
+    {
+      "section_name": "priority",
+      "conditions": [
+        {"field": "priority", "match_type": "equals", "value": "3"}
+      ],
+      "priority": 100
+    },
+    {
+      "section_name": "priority",
+      "conditions": [
+        {"field": "priority", "match_type": "equals", "value": "4"}
+      ],
+      "priority": 100
+    },
+    {
+      "section_name": "priority",
+      "conditions": [
+        {"field": "priority", "match_type": "equals", "value": "5"}
+      ],
+      "priority": 100
+    },
+    {
+      "section_name": "action_items",
+      "conditions": [
+        {"field": "category", "match_type": "equals", "value": "action_item"}
+      ],
+      "priority": 50
+    },
+    {
+      "section_name": "reading_list",
+      "conditions": [
+        {"field": "category", "match_type": "equals", "value": "reading"}
+      ],
+      "priority": 40
+    },
+    {
+      "section_name": "follow_up",
+      "conditions": [
+        {"field": "category", "match_type": "equals", "value": "follow_up"}
+      ],
+      "priority": 40
+    },
+    {
+      "section_name": "references",
+      "conditions": [
+        {"field": "category", "match_type": "equals", "value": "reference"}
+      ],
+      "priority": 30
+    },
+    {
+      "section_name": "archive",
+      "conditions": [
+        {"field": "status", "match_type": "equals", "value": "archived"}
+      ],
+      "priority": 10
+    }
+  ],
+  "color_overrides": {
+    "status": {
+      "new": "#4ECDC4",
+      "in_progress": "#45B7D1",
+      "completed": "#96CEB4",
+      "archived": "#95A5A6"
+    },
+    "priority": {
+      "1": "#FFE066",
+      "2": "#FFA500",
+      "3": "#FF6B6B",
+      "4": "#FF0000",
+      "5": "#8B0000"
+    }
+  },
+  "section_order": [
+    "priority",
+    "this_week",
+    "action_items",
+    "reading_list",
+    "follow_up",
+    "references",
+    "ideas",
+    "archive"
+  ],
+  "custom_settings": {
+    "auto_archive_completed_after_days": 7,
+    "default_section": "this_week",
+    "auto_format_on_add": true,
+    "summary_max_length": 200
+  }
+}
