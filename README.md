@@ -4,6 +4,7 @@ A powerful tool for managing hyperlinks in weekly executive documents. Designed 
 
 ## Features
 
+- **Web Interface**: Browser-based dashboard for easy link management
 - **Link Management**: Add, update, remove, and organize hyperlinks with titles and summaries
 - **Auto-Categorization**: Automatically detects platform (LinkedIn, Twitter, YouTube, etc.) and suggests categories
 - **Formatting Rules Engine**: Configurable rules for colors, sections, and auto-tagging
@@ -12,7 +13,31 @@ A powerful tool for managing hyperlinks in weekly executive documents. Designed 
 - **URL Cleaning**: Automatically removes tracking parameters from URLs
 - **Content Summarization**: Framework for summarizing linked content
 
-## Quick Start
+## Web Interface (Recommended)
+
+The easiest way to use the Document Link Manager is through the web interface:
+
+```bash
+# Install dependencies
+pip install -r requirements.txt
+
+# Start the web server
+python web_app.py
+```
+
+Then open **http://localhost:5000** in your browser.
+
+### Web Interface Features
+
+- **Dashboard**: View all your links organized by section
+- **Quick Add**: Paste a URL to quickly add it with auto-detected title
+- **Status Updates**: Change status with one click (New, In Progress, Completed, Archived)
+- **Formatting**: Apply formatting rules with a single button
+- **Export**: Download your document as Markdown, HTML, or JSON
+
+![Dashboard Screenshot](docs/dashboard.png)
+
+## CLI Quick Start
 
 ### 1. Initialize a New Document
 
@@ -200,7 +225,8 @@ doc.export_markdown("weekly.md")
 
 ```
 STARApp/
-├── dlm.py                      # Main entry point
+├── web_app.py                  # Web application (Flask)
+├── dlm.py                      # CLI entry point
 ├── document_link_manager/      # Core package
 │   ├── __init__.py
 │   ├── document.py            # Document model
@@ -210,8 +236,18 @@ STARApp/
 │   ├── format_engine.py       # Formatting engine
 │   ├── watcher.py             # File watching
 │   └── cli.py                 # Command-line interface
+├── templates/                  # HTML templates
+│   ├── base.html
+│   ├── index.html             # Dashboard
+│   ├── add_link.html          # Add link form
+│   ├── edit_link.html         # Edit link form
+│   └── rules.html             # Rules viewer
+├── static/
+│   ├── css/style.css          # Stylesheet
+│   └── js/app.js              # JavaScript
 ├── config/
 │   └── default_rules.json     # Default formatting rules
+├── data/                       # Document storage
 ├── examples/
 │   └── weekly_document.json   # Example document
 ├── requirements.txt           # Dependencies
