@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CurveFilter</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>CurveFilter</h1>
+      <p class="tagline">See only what fits.</p>
+    </header>
+
+    <section class="toggle-section">
+      <label class="toggle">
+        <input type="checkbox" id="enableToggle" checked>
+        <span class="slider"></span>
+      </label>
+      <span class="toggle-label">Filter Active</span>
+    </section>
+
+    <section class="size-section">
+      <h2>Your Sizes</h2>
+
+      <div class="size-group">
+        <label for="letterSize">Letter Size</label>
+        <select id="letterSize" multiple>
+          <option value="XS">XS</option>
+          <option value="S">S</option>
+          <option value="M">M</option>
+          <option value="L">L</option>
+          <option value="XL">XL</option>
+          <option value="1X">1X</option>
+          <option value="2X">2X</option>
+          <option value="3X">3X</option>
+          <option value="4X">4X</option>
+          <option value="5X">5X</option>
+        </select>
+        <p class="hint">Hold Ctrl/Cmd to select multiple</p>
+      </div>
+
+      <div class="size-group">
+        <label for="numericSize">US Numeric Size</label>
+        <select id="numericSize" multiple>
+          <option value="0">0</option>
+          <option value="2">2</option>
+          <option value="4">4</option>
+          <option value="6">6</option>
+          <option value="8">8</option>
+          <option value="10">10</option>
+          <option value="12">12</option>
+          <option value="14">14</option>
+          <option value="16">16</option>
+          <option value="18">18</option>
+          <option value="20">20</option>
+          <option value="22">22</option>
+          <option value="24">24</option>
+          <option value="26">26</option>
+          <option value="28">28</option>
+          <option value="30">30</option>
+          <option value="32">32</option>
+        </select>
+        <p class="hint">Hold Ctrl/Cmd to select multiple</p>
+      </div>
+
+      <div class="size-group">
+        <label for="waistSize">Waist / Pants Size</label>
+        <select id="waistSize" multiple>
+          <option value="24">24</option>
+          <option value="25">25</option>
+          <option value="26">26</option>
+          <option value="27">27</option>
+          <option value="28">28</option>
+          <option value="29">29</option>
+          <option value="30">30</option>
+          <option value="31">31</option>
+          <option value="32">32</option>
+          <option value="33">33</option>
+          <option value="34">34</option>
+          <option value="36">36</option>
+          <option value="38">38</option>
+          <option value="40">40</option>
+          <option value="42">42</option>
+          <option value="44">44</option>
+        </select>
+        <p class="hint">Hold Ctrl/Cmd to select multiple</p>
+      </div>
+
+      <div class="size-group">
+        <label for="shoeSize">Shoe Size (US)</label>
+        <select id="shoeSize" multiple>
+          <option value="5">5</option>
+          <option value="5.5">5.5</option>
+          <option value="6">6</option>
+          <option value="6.5">6.5</option>
+          <option value="7">7</option>
+          <option value="7.5">7.5</option>
+          <option value="8">8</option>
+          <option value="8.5">8.5</option>
+          <option value="9">9</option>
+          <option value="9.5">9.5</option>
+          <option value="10">10</option>
+          <option value="10.5">10.5</option>
+          <option value="11">11</option>
+          <option value="11.5">11.5</option>
+          <option value="12">12</option>
+          <option value="13">13</option>
+        </select>
+        <p class="hint">Hold Ctrl/Cmd to select multiple</p>
+      </div>
+    </section>
+
+    <section class="filter-mode-section">
+      <h2>Display Mode</h2>
+      <div class="radio-group">
+        <label>
+          <input type="radio" name="filterMode" value="hide" checked>
+          <span>Hide unavailable items</span>
+        </label>
+        <label>
+          <input type="radio" name="filterMode" value="gray">
+          <span>Gray out unavailable items</span>
+        </label>
+        <label>
+          <input type="radio" name="filterMode" value="badge">
+          <span>Badge available items ✓</span>
+        </label>
+      </div>
+    </section>
+
+    <button id="saveBtn" class="save-btn">Save Preferences</button>
+    <div id="status" class="status"></div>
+
+    <footer>
+      <p>Supported: ASOS · Nordstrom · Zara</p>
+    </footer>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

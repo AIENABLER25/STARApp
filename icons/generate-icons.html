@@ -1,0 +1,32 @@
+<!-- Open this file in a browser, right-click each canvas, and "Save image as" to create the icon PNGs -->
+<!DOCTYPE html>
+<html>
+<body>
+<h2>CurveFilter Icons - Right-click each to save as PNG</h2>
+<div>
+  <h3>16x16</h3><canvas id="c16" width="16" height="16"></canvas>
+  <h3>48x48</h3><canvas id="c48" width="48" height="48"></canvas>
+  <h3>128x128</h3><canvas id="c128" width="128" height="128"></canvas>
+</div>
+<script>
+function drawIcon(canvas) {
+  const s = canvas.width;
+  const ctx = canvas.getContext('2d');
+  // Background circle
+  ctx.fillStyle = '#b5485f';
+  ctx.beginPath();
+  ctx.arc(s/2, s/2, s/2, 0, Math.PI * 2);
+  ctx.fill();
+  // "CF" text
+  ctx.fillStyle = '#ffffff';
+  ctx.font = `bold ${s * 0.4}px Arial`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('CF', s/2, s/2);
+}
+drawIcon(document.getElementById('c16'));
+drawIcon(document.getElementById('c48'));
+drawIcon(document.getElementById('c128'));
+</script>
+</body>
+</html>

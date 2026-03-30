@@ -1,0 +1,86 @@
+/* CurveFilter Content Styles */
+
+/* Grayed out mode */
+.curvefilter-unavailable {
+  opacity: 0.25 !important;
+  filter: grayscale(80%) !important;
+  transition: opacity 0.3s, filter 0.3s !important;
+  position: relative !important;
+}
+
+.curvefilter-unavailable:hover {
+  opacity: 0.6 !important;
+  filter: grayscale(40%) !important;
+}
+
+.curvefilter-unavailable::after {
+  content: "Not in your size";
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  z-index: 100;
+  pointer-events: none;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Hidden mode */
+.curvefilter-hidden {
+  display: none !important;
+}
+
+/* Badge mode - available items */
+.curvefilter-available {
+  position: relative !important;
+}
+
+.curvefilter-available::after {
+  content: "Your size ✓";
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background: rgba(76, 175, 80, 0.9);
+  color: #fff;
+  font-size: 10px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  z-index: 100;
+  pointer-events: none;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Notification bar */
+.curvefilter-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(135deg, #b5485f, #9a3a4f);
+  color: white;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 99999;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.15);
+}
+
+.curvefilter-bar-close {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 0 4px;
+  opacity: 0.8;
+}
+
+.curvefilter-bar-close:hover {
+  opacity: 1;
+}
