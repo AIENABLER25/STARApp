@@ -1,0 +1,51 @@
+{
+  "manifest_version": 3,
+  "name": "CurveFilter",
+  "version": "1.0.0",
+  "description": "See only what fits. Shop only what's yours. Filter fashion sites to show only items available in your size.",
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://www.asos.com/*",
+    "https://www.nordstrom.com/*",
+    "https://www.zara.com/*"
+  ],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "background": {
+    "service_worker": "background/service-worker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.asos.com/*"],
+      "js": ["content/shared.js", "content/asos.js"],
+      "css": ["content/curvefilter.css"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://www.nordstrom.com/*"],
+      "js": ["content/shared.js", "content/nordstrom.js"],
+      "css": ["content/curvefilter.css"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://www.zara.com/*"],
+      "js": ["content/shared.js", "content/zara.js"],
+      "css": ["content/curvefilter.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}
